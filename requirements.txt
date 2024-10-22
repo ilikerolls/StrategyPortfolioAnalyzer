@@ -1,6 +1,8 @@
 pandas~=2.2.3
 numpy~=2.1.2
-plotly~=5.24.1
+plotly
 scipy~=1.14.1
-QuantStats~=0.0.62
+# QuantStats~=0.0.62
 ipython~=8.28.0
+# pyarrow isn't supported in Python 3.13 yet. Use Python 3.12 for now
+pyarrow>=17.0.0

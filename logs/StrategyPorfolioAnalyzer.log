@@ -1,3 +1,0 @@
-2024-10-16 16:47:45 | config_setup.py:load_logger:33 | DEBUG |  ***** Logger Loaded *****
-2024-10-16 16:48:11 | main.py:<module>:9 | INFO |  Starting StrategyPorfolioAnalyzer
-2024-10-16 16:48:11 | data_loader.py:load_data:41 | INFO |  Loaded Strategy [MomentumNQ] with [240] Trades from G:\My Drive\Coding Projects\Python\PyCharm\StrategyPortfolioAnalyzer\data\in\MomentumNQ_01012022-10152024.csv. Removing file now that it has already been processed.

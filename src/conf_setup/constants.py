@@ -14,3 +14,7 @@ LOG_FILE = os.path.join(ROOT_DIR, "logs", f"{APP_NAME}.log")
 LOG_FILE_ERR = os.path.join(ROOT_DIR, "logs", f"{APP_NAME}.log")
 LOG_LEVEL = 'DEBUG'
 LOG_BACKUPS = 2
+
+# Database Settings
+DB_DIR = os.path.join(DATA_DIR, "dbs")
+DB_STRAT_DIR = os.path.join(DB_DIR, "strategies")
