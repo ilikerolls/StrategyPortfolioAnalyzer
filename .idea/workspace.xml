@@ -4,28 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0de25923-4b6a-4b99-a8ce-cd27307ddf87" name="Changes" comment="Initial Commit">
-      <change afterPath="$PROJECT_DIR$/.idea/StrategyPortfolioAnalyzer.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/dbs/strategies/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/in/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/in/arch/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/logs/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reports/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/trade_analyzer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/types/data_trades.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/in/MomentumNQ_01012022-10152024.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/in/MomentumNQ_01012022-10152024.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/in/arch/CourseVWAPStrategy_01012022-12312024.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/in/CourseVWAPStrategy_01012022-12312024.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/StrategyPorfolioAnalyzer.log" beforeDir="false" />
+    <list default="true" id="0de25923-4b6a-4b99-a8ce-cd27307ddf87" name="Changes" comment="Fixed Pandas Database, so it'll rememeber which trades we had loaded previously. And it takes care of any potential accidential Duplication of Records being added to our database.&#10;&#10;Also added IDE settings, so I can work on this on my laptop in Pycharm. As at the current moment Python 3.12.x is the highest version of Python supported until PyArrow upgrades to 3.13.x">
+      <change afterPath="$PROJECT_DIR$/src/UI/app.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UI/tabs/Portfolio_Optimizer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UI/tabs/tab2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/data/analyzers/analyze_data_trades.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/data/types/schema_data_trades.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/dbs/strategies/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/data/dbs/strategies/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/in/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/data/in/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/in/CourseVWAPStrategy_01012022-12312024.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/in/MomentumNQ_01012022-10152024.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/in/arch/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/data/in/arch/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/logs/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/reports/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/conf_setup/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/conf_setup/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/loaders/data_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/loaders/data_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/loaders/data_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/trade_analyzer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/types/data_trades.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/types/data_trades.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +56,9 @@
     &quot;accountId&quot;: &quot;d4264388-b24e-4637-88cd-9ff8f34962f0&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -69,24 +69,33 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.backtrader_optimization.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.scratch1.executor": "Run",
-    "Python.scratch2.executor": "Debug",
-    "Python.scratch3.executor": "Run",
-    "Python.scratch4.executor": "Debug",
-    "Python.scratch6.executor": "Run",
-    "Python.scratch7 (1).executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "G:/My Drive/Coding Projects/Python/PyCharm/CryptoBot",
-    "settings.editor.selected.configurable": "preferences.rainbow.brackets.lite"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Notification.DisplayName-DoNotAsk-Vcs Notifications&quot;: &quot;VCS notifications&quot;,
+    &quot;Notification.DoNotAsk-Vcs Notifications&quot;: &quot;true&quot;,
+    &quot;Python.app.executor&quot;: &quot;Run&quot;,
+    &quot;Python.backtrader_optimization.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.schema_data_trades.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scratch1.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scratch2.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.scratch3.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scratch4.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.scratch6.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scratch7 (1).executor&quot;: &quot;Debug&quot;,
+    &quot;Python.scratch7.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.scratch8.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scratch9.executor&quot;: &quot;Run&quot;,
+    &quot;Python.tab2.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;G:/My Drive/Coding Projects/Python/PyCharm/StrategyPortfolioAnalyzer&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
       <console-settings is-module-sdk="true">
@@ -95,6 +104,9 @@
     </option>
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\My Drive\Coding Projects\Python\PyCharm\StrategyPortfolioAnalyzer" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="G:\My Drive\Coding Projects\Python\PyCharm\StrategyPortfolioAnalyzer\data\in" />
       <recent name="G:\My Drive\Coding Projects\Python\PyCharm\StrategyPortfolioAnalyzer\data\dbs\strategies" />
@@ -125,7 +137,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="scratch4" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="schema_data_trades" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="StrategyPortfolioAnalyzer" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -134,11 +146,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/data/types" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch4.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/data/types/schema_data_trades.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -169,7 +181,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="scratch7 (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="scratch7" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="StrategyPortfolioAnalyzer" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -191,7 +203,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="scratch7" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="scratch8" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="StrategyPortfolioAnalyzer" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -204,7 +216,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\green\AppData\Roaming\JetBrains\PyCharmCE2024.2\scratches\scratch7.py" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch8.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -216,17 +228,17 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.scratch7 (1)" />
-        <item itemvalue="Python.scratch6" />
+        <item itemvalue="Python.scratch8" />
         <item itemvalue="Python.scratch7" />
-        <item itemvalue="Python.scratch4" />
+        <item itemvalue="Python.scratch6" />
+        <item itemvalue="Python.schema_data_trades" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-0e3be3396995-c546a90a8094-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.23339.19" />
+        <option value="bundled-python-sdk-d7ad00fb9fc3-c546a90a8094-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.23726.102" />
       </set>
     </attachedChunks>
   </component>
@@ -255,12 +267,38 @@
       <option name="project" value="LOCAL" />
       <updated>1729111780766</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Fixed Pandas Database, so it'll rememeber which trades we had loaded previously. And it takes care of any potential accidential Duplication of Records being added to our database.&#10;&#10;Also added IDE settings, so I can work on this on my laptop in Pycharm. As at the current moment Python 3.12.x is the highest version of Python supported until PyArrow upgrades to 3.13.x">
+      <option name="closed" value="true" />
+      <created>1729558248658</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1729558248658</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Initial Commit" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="Commit Log Directory" />
-    <option name="LAST_COMMIT_MESSAGE" value="Commit Log Directory" />
+    <MESSAGE value="Initial Commit" />
+    <MESSAGE value="Fixed Pandas Database, so it'll rememeber which trades we had loaded previously. And it takes care of any potential accidential Duplication of Records being added to our database.&#10;&#10;Also added IDE settings, so I can work on this on my laptop in Pycharm. As at the current moment Python 3.12.x is the highest version of Python supported until PyArrow upgrades to 3.13.x" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Pandas Database, so it'll rememeber which trades we had loaded previously. And it takes care of any potential accidential Duplication of Records being added to our database.&#10;&#10;Also added IDE settings, so I can work on this on my laptop in Pycharm. As at the current moment Python 3.12.x is the highest version of Python supported until PyArrow upgrades to 3.13.x" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$APPLICATION_CONFIG_DIR$/scratches/scratch7.py</url>
+          <line>14</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$APPLICATION_CONFIG_DIR$/scratches/scratch8.py</url>
+          <line>23</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

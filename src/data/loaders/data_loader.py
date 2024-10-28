@@ -1,15 +1,18 @@
 import csv
 import os
 import shutil
+import threading
+import time
 
 import pandas as pd
 
 from src.conf_setup import DATA_IN_DIR, logger, DATA_IN_ARCH_DIR, DB_STRAT_DIR
 from src.data.types.data_trades import DataTrades
+from src.data.types.schema_data_trades import SchemaDT
 
 
 class DataLoaderCSV:
-    """Loads files from the data in directory"""
+    """Loads files from the data/in directory and saves them to a database in data/dbs/strategies"""
 
     def __init__(self):
         self.data_trades = DataTrades()
@@ -31,7 +34,7 @@ class DataLoaderCSV:
                 try:
                     row_counter = 0
                     with open(csv_file, 'r') as fh:
-                        csv_reader = csv.DictReader(f=fh, fieldnames=DataTrades.strat_cols)
+                        csv_reader = csv.DictReader(f=fh, fieldnames=SchemaDT.COL_NAMES_LIST)
                         # csv_reader = csv.reader()
                         # Iterate over each row in the CSV file
                         for row in csv_reader:
@@ -41,14 +44,32 @@ class DataLoaderCSV:
                             self.data_trades.add_trade_data(row=row)
                             row_counter += 1
                     files_processed += 1
-                    logger.info(f"Attempted to Load {row_counter} Trades from {file}. Processed {files_processed} files. NOTE: There maybe duplicate Trades filtered out after this.")
-                     # shutil.move(csv_file, csv_file_arch) # Remove file in future? os.remove(full_filename)
+                    logger.info(f"Attempted to Load {row_counter} Trades from {file}. Processed {files_processed} files.")
+                    shutil.move(csv_file, csv_file_arch) # Remove file in future? os.remove(full_filename)
                 except Exception as e:
                     logger.exception(f"Failed to load Trade file [{csv_file}] into database. Exception: {e}")
         if files_processed > 0:
             self.data_trades.dedupe()
             self.save_db()
         return self.data_trades
+
+    def _monitor_csvs(self, seconds: int = 60):
+        """
+        Just here to run the monitor_csvs thread loop, so we aren't constantly checking for csvs
+        :param seconds:
+        """
+        while True:
+            self.load_strat_csvs()
+            time.sleep(seconds)
+
+
+    def monitor_csvs(self, seconds:int = 60):
+        """
+        Monitor the csv directory every [seconds] in a separate thread
+        :param seconds: [Optional] Seconds to check csv directory
+        """
+        t_load_strat_csvs = threading.Thread(target=self._monitor_csvs, name='load_strat_csvs', kwargs={'seconds': seconds}, daemon=True)
+        t_load_strat_csvs.start()
 
     def _load_strat_dbs(self):
         """
