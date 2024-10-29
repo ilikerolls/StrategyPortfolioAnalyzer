@@ -19,7 +19,7 @@ class DataTrades(AnalyzeDataTrades, metaclass=Singleton):
         """
         strat_name = trades_df['Strategy'].iloc[0]
         self.trade_data[strat_name] = trades_df
-        self.trade_data[strat_name].set_index(keys=SchemaDT.DT_INDEX_KEYS, inplace=True, drop=False, verify_integrity=True)
+        self.trade_data[strat_name].set_index(keys=SchemaDT.DT_INDEX_KEYS, inplace=True, drop=False, verify_integrity=False)
         # read_parquet doesn't return all the correct Data Types, but at least the important ones "Entry time" "Exit time"
         # TODO: 1 option if we decide we need it is to re-apply DataTrades.strat_col_dtypes to ALL columns, but so far we don't need it
         # Data Types:\n{self.trade_data[strat_name].dtypes}
@@ -32,11 +32,15 @@ class DataTrades(AnalyzeDataTrades, metaclass=Singleton):
         :param row: A Dictionary Row with same keys as self.strat_cols(Columns)
         """
         formatted_row: dict = SchemaDT.format_row(row=row)
-        strat_name = formatted_row['Strategy']
-        # Creates a new Dataframe for the Strategy if one doesn't already Exist
-        strat_df = self.get_strat_df(strat_name=strat_name)
-        row_df = pd.DataFrame(data=[formatted_row.values()], columns=SchemaDT.COL_NAMES_LIST)
-        self.trade_data[strat_name] = pd.concat([strat_df, row_df])
+        try:
+            strat_name = formatted_row['Strategy']
+            # Creates a new Dataframe for the Strategy if one doesn't already Exist
+            strat_df = self.get_strat_df(strat_name=strat_name)
+            row_df = pd.DataFrame(data=[formatted_row.values()], columns=SchemaDT.COL_NAMES_LIST)
+            self.trade_data[strat_name] = pd.concat([strat_df, row_df])
+        except KeyError as ke:
+            logger.error(f"Improperly formatted row. Couldn't find 'Strategy' column in .csv.\nFormat should be: "
+                         f"{SchemaDT.COL_NAMES_LIST}\nrow: {row}\nformatted row: {formatted_row}\nException: {ke}")
 
     def _create_new_strat_df(self, strat_name: str) -> pd.DataFrame:
         """
@@ -45,7 +49,7 @@ class DataTrades(AnalyzeDataTrades, metaclass=Singleton):
         :return: Pandas Dataframe of Strategy
         """
         self.trade_data[strat_name] = pd.DataFrame(data=SchemaDT.DT_DATA_COL_DTYPES)
-        self.trade_data[strat_name].set_index(keys=SchemaDT.DT_INDEX_KEYS, inplace=True, drop=False, verify_integrity=True)
+        self.trade_data[strat_name].set_index(keys=SchemaDT.DT_INDEX_KEYS, inplace=True, drop=False, verify_integrity=False)
         return self.trade_data[strat_name]
 
     def dedupe(self, strat_name: str = None):

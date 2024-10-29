@@ -53,7 +53,7 @@ class DataLoaderCSV:
             self.save_db()
         return self.data_trades
 
-    def _monitor_csvs(self, seconds: int = 60):
+    def _monitor_csvs(self, seconds: int = 120):
         """
         Just here to run the monitor_csvs thread loop, so we aren't constantly checking for csvs
         :param seconds:
@@ -63,7 +63,7 @@ class DataLoaderCSV:
             time.sleep(seconds)
 
 
-    def monitor_csvs(self, seconds:int = 60):
+    def monitor_csvs(self, seconds:int = 120):
         """
         Monitor the csv directory every [seconds] in a separate thread
         :param seconds: [Optional] Seconds to check csv directory

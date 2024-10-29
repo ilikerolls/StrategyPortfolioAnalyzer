@@ -31,12 +31,23 @@ class SchemaDT:
                          "Commission": accounting_to_num,'ETD': accounting_to_num, 'MAE': accounting_to_num,'MFE': accounting_to_num, 'Entry time': to_datetime, 'Exit time': to_datetime}
 
     @staticmethod
+    def create_dt_idx(dates: list, name=DT_INDEX_NAME) -> pd.DatetimeIndex:
+        """
+        Create a Date Time Index based on the dates passed to it. That can be used in
+        pd.DataFrame(data={}, index=create_dt_idx(date=[])
+        :param dates: A list of dates
+        :param name: A name given to the Index
+        :return: A DatetimeIndex
+        """
+        return pd.DatetimeIndex(data=dates, dtype='datetime64[ns]', name=name)
+
+    @staticmethod
     def format_row(row: dict) -> dict:
         """
         Convert a Dict of Data to proper formatting that our Dataframe Supports
         :param row: A dictionary of data including columns in strat_cols
         """
-        formatted_row = {}
+        formatted_row = row
         for col, converter in SchemaDT.DATA_CONVERTERS.items():
             formatted_row[col] = converter(row[col])
         return formatted_row

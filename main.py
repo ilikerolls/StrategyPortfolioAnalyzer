@@ -9,8 +9,9 @@ from src.data.loaders.data_loader import DataLoaderCSV
 if __name__ == '__main__':
     logger.info(f'{APP_NAME}: Started')
     data_loader = DataLoaderCSV()
+    data_loader.load_strat_csvs()
     # Monitor for CSVS every this amount of seconds in a separate thread
-    data_loader.monitor_csvs(seconds=60)
+    data_loader.monitor_csvs(seconds=120)
     # The following 2 lines are for testing and can be removed in the future
     total_max_dd = data_loader.data_trades.get_portfolio_calc_stats(strat_names=['MomentumNQ', 'CourseVWAPStrategy'])
     logger.info(f"Total Combined Max Drawdown for Strategies MomentumNQ and CourseVWAPStrategy are: {total_max_dd}")
