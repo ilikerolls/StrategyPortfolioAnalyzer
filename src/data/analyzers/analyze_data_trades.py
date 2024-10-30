@@ -1,19 +1,9 @@
 import pandas as pd
-from dataclasses import dataclass
 
 from src.conf_setup import logger
+from src.data.analyzers.StrategyStats import StrategyStats
+from src.data.analyzers.portfolio_calc import PortfolioCalculator
 from src.data.types.schema_data_trades import SchemaDT
-
-@dataclass
-class PortfolioStats:
-    pass
-
-@dataclass
-class StrategyStats:
-    """Class to hold Strategy Statistics. It only gets updated """
-    name: str = ''
-    rows: int = 0
-    daily_df: pd.DataFrame = pd.DataFrame
 
 class AnalyzeDataTrades:
     """Analyze and Combine Strategy Data such as Max Drawdown for Portfolio"""
@@ -22,49 +12,15 @@ class AnalyzeDataTrades:
     # Should only be accessed through get_strat_stats method
     _strat_stats: dict[str, StrategyStats] = {}
 
-    def combine_strat_stats(self, strat_names: list) -> pd.DataFrame:
-        # create a list of selected strategy data frames
-        strat_stat_list = []
-        for strat_name in strat_names:
-            strat_stat_list.append(self.get_strat_stats(strat_name=strat_name).daily_df)
-        # Combine to 1 Dataframe
-        combined_df = pd.concat(objs=strat_stat_list)
-        # Group By All Dataframes Combined to get our Total Daily PnL & Daily Cumulative Profits
-        daily_pnl: pd.Series = combined_df.groupby(by=['Exit time'])['Profit'].sum()
-        #TODO: cumsum() "may" not be calculating as expected or it could be a Data error?
-        cum_sum: pd.Series = daily_pnl.cumsum()
-        combined_profit_cum_df = pd.DataFrame(data={'Total Profit': daily_pnl, 'Cum. net profit': cum_sum}, index=SchemaDT.create_dt_idx(dates=daily_pnl.index))
-        return combined_profit_cum_df
-
-    def get_daily_max_dd(self, sel_strats_df: pd.DataFrame) -> float:
-        """
-        Get Drawdown for a portfolio of Strategies
-        :param sel_strats_df: Combined Strategies Selected Dataframe
-        :return: Combined Max DrawDown
-        """
-        highest_pnl = 0.0
-        daily_cum_dd = {'Exit time': [], 'Cum_DD': []}
-        # daily_date = date(index), cum_pnl = 'Cum. net profit'(column)
-        for daily_date, cum_pnl in sel_strats_df['Cum. net profit'].items():
-            if cum_pnl > highest_pnl: highest_pnl = cum_pnl
-            daily_cum_dd['Exit time'].append(daily_date)
-            # Calculate Cumulative DrawDown
-            Daily_DD = highest_pnl if cum_pnl != 0 else 0.0
-            Cum_DD = min((cum_pnl - Daily_DD), 0.0)
-            daily_cum_dd['Cum_DD'].append(Cum_DD)
-        daily_dd = round(min(daily_cum_dd['Cum_DD']), 2)
-
-        return daily_dd
-
-    def get_portfolio_calc_stats(self, strat_names: list) -> float:
+    def get_portfolio_calc_stats(self, strat_names: list) -> PortfolioCalculator:
         """
         Get Statistics for the Portfolio Calculator page based on the Strategies Selected
         :param strat_names: A list of Strategy Names to get Statistics for
-        :return: A list of statistics
+        :return: PortfolioCalculator Dataclass with Calculations of Profit, Drawdown, etc..
         """
-        combined_stats_df = self.combine_strat_stats(strat_names=strat_names)
-        total_max_dd = self.get_daily_max_dd(sel_strats_df=combined_stats_df)
-        return total_max_dd
+        # Get Strategy StrategyStats Objects
+        sel_strats_ss = [self.get_strat_stats(strat_name=strat_name) for strat_name in strat_names]
+        return PortfolioCalculator(sel_strats_ss=sel_strats_ss)
 
     def get_strat_stats(self, strat_name: str) -> StrategyStats:
         """

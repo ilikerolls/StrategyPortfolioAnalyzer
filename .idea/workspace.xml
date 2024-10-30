@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0de25923-4b6a-4b99-a8ce-cd27307ddf87" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/data/analyzers/StrategyStats.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/data/analyzers/portfolio_calc.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/conf_setup/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/conf_setup/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/analyzers/analyze_data_trades.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/analyzers/analyze_data_trades.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/loaders/data_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/loaders/data_loader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/types/data_trades.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/types/data_trades.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/types/schema_data_trades.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/types/schema_data_trades.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +64,7 @@
     "Python.app.executor": "Run",
     "Python.backtrader_optimization.executor": "Run",
     "Python.main.executor": "Run",
+    "Python.portfolio_calc.executor": "Debug",
     "Python.schema_data_trades.executor": "Run",
     "Python.scratch1.executor": "Run",
     "Python.scratch2.executor": "Debug",
@@ -72,8 +72,8 @@
     "Python.scratch4.executor": "Debug",
     "Python.scratch6.executor": "Run",
     "Python.scratch7 (1).executor": "Debug",
-    "Python.scratch7.executor": "Debug",
-    "Python.scratch8.executor": "Debug",
+    "Python.scratch7.executor": "Run",
+    "Python.scratch8.executor": "Run",
     "Python.scratch9.executor": "Run",
     "Python.tab2.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -126,7 +126,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="schema_data_trades" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="portfolio_calc" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="StrategyPortfolioAnalyzer" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -135,11 +135,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/data/types" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/data/analyzers" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/data/types/schema_data_trades.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/data/analyzers/portfolio_calc.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -219,8 +219,8 @@
         <item itemvalue="Python.main" />
         <item itemvalue="Python.scratch8" />
         <item itemvalue="Python.scratch7" />
+        <item itemvalue="Python.portfolio_calc" />
         <item itemvalue="Python.scratch6" />
-        <item itemvalue="Python.schema_data_trades" />
       </list>
     </recent_temporary>
   </component>
@@ -272,7 +272,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730152586498</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Bug Fix: format_row method wasn't returning ALL column names. That is now fixed.">
+      <option name="closed" value="true" />
+      <created>1730221303661</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1730221303661</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -281,22 +289,25 @@
     <MESSAGE value="Initial Commit" />
     <MESSAGE value="Fixed Pandas Database, so it'll rememeber which trades we had loaded previously. And it takes care of any potential accidential Duplication of Records being added to our database.&#10;&#10;Also added IDE settings, so I can work on this on my laptop in Pycharm. As at the current moment Python 3.12.x is the highest version of Python supported until PyArrow upgrades to 3.13.x" />
     <MESSAGE value="1. Started Creating the User Interface.&#10;2. Added a Pandas Schema Class for DataTrades that holds each Strategy's trades.&#10;3. Data Loader that pulls csv files into it's database now runs in the background and on startup&#10;4. Added Max Drawdown reporting and the ability to combine Strategies. Which will give us the ability to look at the portfolio as a whole." />
-    <option name="LAST_COMMIT_MESSAGE" value="1. Started Creating the User Interface.&#10;2. Added a Pandas Schema Class for DataTrades that holds each Strategy's trades.&#10;3. Data Loader that pulls csv files into it's database now runs in the background and on startup&#10;4. Added Max Drawdown reporting and the ability to combine Strategies. Which will give us the ability to look at the portfolio as a whole." />
+    <MESSAGE value="Bug Fix: format_row method wasn't returning ALL column names. That is now fixed." />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug Fix: format_row method wasn't returning ALL column names. That is now fixed." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$APPLICATION_CONFIG_DIR$/scratches/scratch7.py</url>
-          <line>14</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$APPLICATION_CONFIG_DIR$/scratches/scratch8.py</url>
-          <line>25</line>
+          <line>27</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
     </breakpoint-manager>
   </component>
 </project>

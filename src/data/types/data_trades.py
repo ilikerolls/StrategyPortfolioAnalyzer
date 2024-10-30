@@ -19,7 +19,7 @@ class DataTrades(AnalyzeDataTrades, metaclass=Singleton):
         """
         strat_name = trades_df['Strategy'].iloc[0]
         self.trade_data[strat_name] = trades_df
-        self.trade_data[strat_name].set_index(keys=SchemaDT.DT_INDEX_KEYS, inplace=True, drop=False, verify_integrity=False)
+        self._set_index(strat_name)
         # read_parquet doesn't return all the correct Data Types, but at least the important ones "Entry time" "Exit time"
         # TODO: 1 option if we decide we need it is to re-apply DataTrades.strat_col_dtypes to ALL columns, but so far we don't need it
         # Data Types:\n{self.trade_data[strat_name].dtypes}
@@ -39,8 +39,7 @@ class DataTrades(AnalyzeDataTrades, metaclass=Singleton):
             row_df = pd.DataFrame(data=[formatted_row.values()], columns=SchemaDT.COL_NAMES_LIST)
             self.trade_data[strat_name] = pd.concat([strat_df, row_df])
         except KeyError as ke:
-            logger.error(f"Improperly formatted row. Couldn't find 'Strategy' column in .csv.\nFormat should be: "
-                         f"{SchemaDT.COL_NAMES_LIST}\nrow: {row}\nformatted row: {formatted_row}\nException: {ke}")
+            logger.error(f"Missing 'Strategy' column in row: {row}. Exception: {ke}")
 
     def _create_new_strat_df(self, strat_name: str) -> pd.DataFrame:
         """
@@ -49,23 +48,27 @@ class DataTrades(AnalyzeDataTrades, metaclass=Singleton):
         :return: Pandas Dataframe of Strategy
         """
         self.trade_data[strat_name] = pd.DataFrame(data=SchemaDT.DT_DATA_COL_DTYPES)
-        self.trade_data[strat_name].set_index(keys=SchemaDT.DT_INDEX_KEYS, inplace=True, drop=False, verify_integrity=False)
+        self._set_index(strat_name)
         return self.trade_data[strat_name]
 
     def dedupe(self, strat_name: str = None):
         """
-        Remove any duplicate Rows based on "Entry time" and "Exit time"
+        Remove any duplicate Rows based on "Entry time" and "Exit time". Also sort by Index.
         :param strat_name: Optional: Name of Strategy to dedupe. Default: is to dedupe ALL Strategy Dataframes
         """
         if strat_name is None:
-            for name, strat_df in self.trade_data.items():
-                self.get_strat_df(name).drop_duplicates(subset=SchemaDT.DT_INDEX_KEYS, keep='last', inplace=True)
-                self.trade_data[name].set_index(keys=SchemaDT.DT_INDEX_KEYS, inplace=True, drop=False,
-                                                      verify_integrity=False)
+            for name in self.trade_data.keys():
+                self._dedupe_and_set_index(strat_name=name)
         else:
-            self.get_strat_df(strat_name).drop_duplicates(subset=['Entry time', 'Exit time'], keep='last', inplace=True)
-            self.trade_data[strat_name].set_index(keys=SchemaDT.DT_INDEX_KEYS, inplace=True, drop=False,
-                                            verify_integrity=False)
+            self._dedupe_and_set_index(strat_name=strat_name)
+
+    def _dedupe_and_set_index(self, strat_name: str):
+        self.trade_data[strat_name].drop_duplicates(subset=SchemaDT.DT_INDEX_KEYS, keep='last', inplace=True)
+        self._set_index(strat_name)
+        self.trade_data[strat_name].sort_index(inplace=True, ascending=True)
+
+    def _set_index(self, strat_name: str):
+        self.trade_data[strat_name].set_index(keys=SchemaDT.DT_INDEX_KEYS, inplace=True, drop=False, verify_integrity=False)
 
     def get_strat_df(self, strat_name: str) -> pd.DataFrame:
         """
