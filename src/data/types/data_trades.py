@@ -82,9 +82,3 @@ class DataTrades(AnalyzeDataTrades, metaclass=Singleton):
         except KeyError:
             logger.info(f"{strat_name} - Strategy does NOT exist in our database. Returning an Empty Strategy Dataframe")
             return self._create_new_strat_df(strat_name=strat_name)
-
-    def strats_to_list(self) -> list:
-        """
-        :return: A list of Loaded Strategies
-        """
-        return list(self.trade_data.keys())

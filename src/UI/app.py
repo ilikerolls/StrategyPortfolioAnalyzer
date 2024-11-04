@@ -8,17 +8,20 @@ from src.conf_setup import logger
 # suppress_callback_exceptions=True is necessary for multi file dash apps
 app = Dash(name=__name__, suppress_callback_exceptions=True, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
+
 def create_layout() -> list:
     return [
         html.H1(children=f'Strategy Portfolio Optimizer', style={'textAlign': 'center'}),
         dcc.Tabs(children=[
-            dcc.Tab(children=Portfolio_Optimizer.display_tab_content(), label=Portfolio_Optimizer.label),
-            dcc.Tab(children=tab2.display_tab_content(), label=tab2.label),
+            dcc.Tab(children=Portfolio_Optimizer.display_tab_content(), label=Portfolio_Optimizer.tab_label),
+            dcc.Tab(children=tab2.display_tab_content(), label=tab2.tab_label),
         ])
     ]
 
+
 # Create new layout On Page Load via this method
 app.layout = create_layout
+
 
 def start_dashboard():
     logger.info("Dashboard: Starting")

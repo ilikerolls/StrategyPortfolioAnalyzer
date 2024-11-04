@@ -1,8 +1,8 @@
-from dash import Dash, dcc, html, Input, Output, callback
+from dash import dcc, html, Input, Output, callback
 import plotly.express as px
 import pandas as pd
 
-label = 'Tabs 2'
+tab_label = 'Statistics'
 
 filepath = (
     "https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv"
