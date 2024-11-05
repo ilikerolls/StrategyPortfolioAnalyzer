@@ -1,7 +1,8 @@
 from dash import Dash, html, dcc
 import dash_bootstrap_components as dbc
 
-from src.UI.tabs import Portfolio_Optimizer
+#from src.UI.tabs import Portfolio_Optimizer
+from src.UI.tabs import portfolio_tab
 from src.UI.tabs import tab2
 from src.conf_setup import logger
 
@@ -11,9 +12,10 @@ app = Dash(name=__name__, suppress_callback_exceptions=True, external_stylesheet
 
 def create_layout() -> list:
     return [
-        html.H1(children=f'Strategy Portfolio Optimizer', style={'textAlign': 'center'}),
+        html.H1(children='Strategy Portfolio Optimizer', style={'textAlign': 'center'}),
         dcc.Tabs(children=[
-            dcc.Tab(children=Portfolio_Optimizer.display_tab_content(), label=Portfolio_Optimizer.tab_label),
+            #dcc.Tab(children=Portfolio_Optimizer.display_tab_content(), label=Portfolio_Optimizer.tab_label),
+            dcc.Tab(children=portfolio_tab.load_page(), label=portfolio_tab.TAB_LABEL),
             dcc.Tab(children=tab2.display_tab_content(), label=tab2.tab_label),
         ])
     ]

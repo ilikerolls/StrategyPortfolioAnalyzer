@@ -3,7 +3,7 @@ import pandas as pd
 
 from src.conf_setup import logger
 from src.data.analyzers.StrategyStats import StrategyStats
-from src.data.analyzers.portfolio_calc import PortfolioCalculator
+from src.data.analyzers.portfolio_calculator import PortfolioCalculator
 from src.data.types.schema_data_trades import SchemaDT
 
 class AnalyzeDataTrades:
