@@ -15,9 +15,12 @@ class PortfolioCalculator:
     """
     # Selected Strategies Dataframe
     sel_strats_ss: list[StrategyStats]
+    start_date: str = None
+    end_date: str = None
     net_profit: float = 0.0
     max_drawdown: float = 0.0
     return_to_dd: float = 0.0
+    strat_names: list = list
     # req_daytrade_capital_cur: float = 0.0
     # daily_win_rate: float = 0.0
     # largest_losing_day: datetime = None
@@ -42,13 +45,19 @@ class PortfolioCalculator:
     def _combine_strat_stats(self) -> pd.DataFrame:
         # create a list of selected strategy data frames
         strat_stat_list = [strat_ss.daily_df for strat_ss in self.sel_strats_ss]
+        # Loop through and only get Start & End Dates from Dataframe
+        if self.start_date is not None:
+            tmp_strat_stat_list = [
+                strat_df.loc[self.start_date : self.end_date]
+                for strat_df in strat_stat_list
+            ]
+            strat_stat_list = tmp_strat_stat_list
         # Combine to 1 Dataframe
         combined_df = pd.concat(objs=strat_stat_list)
         # Group By All Dataframes Combined to get our Total Daily PnL & Daily Cumulative Profits
         daily_pnl: pd.Series = combined_df.groupby(by=[SchemaDT.DT_INDEX_NAME])['Profit'].aggregate('sum')
-        #TODO: cumsum() "may" not be calculating as expected or it could be a Data error?
         cum_sum: pd.Series = daily_pnl.cumsum()
-        #NOTE: Do we really need to sort the Datetimes? It takes 0.001 second more per strategy
+        #NOTE: Do we really need to sort the Datetime Index? It takes 0.001 second more per strategy
         return pd.DataFrame(data={'Profit': daily_pnl, 'Cum. net profit': cum_sum},
                      index=SchemaDT.create_dt_idx(dates=daily_pnl.index)).sort_index(ascending=True)
 
@@ -69,14 +78,6 @@ class PortfolioCalculator:
             self.return_to_dd = round(abs(self.net_profit / self.max_drawdown), 2)
 
     @property
-    def combined_strats_df(self, start_date: str = None, end_date: str = None) -> pd.DataFrame:
-        """
-        :param start_date: [Optional] A string in format 2022-01-01 Representing the Start Date to select from the
-        Combined Strategies Dataframe. Default is ALL(earliest) Dates
-        :param end_date: [Optional] A string in format 2024-12-31 Representing the End Date to select from the
-        Combined Strategies Dataframe. Default is ALL(latest) Dates
-        :return: A combined strategy Pandas Dataframe from self._combined_strats_df
-        """
-        if start_date is not None:
-            return self._combined_strats_df.loc[start_date:end_date]
+    def combined_strats_df(self) -> pd.DataFrame:
+        """:return: A combined strategy Pandas Dataframe from self._combined_strats_df"""
         return self._combined_strats_df

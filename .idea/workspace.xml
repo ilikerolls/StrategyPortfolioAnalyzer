@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0de25923-4b6a-4b99-a8ce-cd27307ddf87" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/UI/tabs/portfolio_tab.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/tabs/Portfolio_Optimizer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/tabs/portfolio_tab.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/tabs/portfolio_tab.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/conf_setup/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/conf_setup/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/analyzers/StrategyStats.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/analyzers/StrategyStats.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/analyzers/analyze_data_trades.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/analyzers/analyze_data_trades.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/analyzers/portfolio_calc.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/analyzers/portfolio_calculator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/analyzers/portfolio_calculator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/analyzers/portfolio_calculator.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +46,9 @@
     &quot;accountId&quot;: &quot;d4264388-b24e-4637-88cd-9ff8f34962f0&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/.venv/Lib/site-packages/dash/dcc/DatePickerRange.py" root0="SKIP_INSPECTION" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -126,7 +131,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="scratch4" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="scratch3" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="StrategyPortfolioAnalyzer" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -139,7 +144,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch4.py" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch3.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -217,10 +222,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.scratch3" />
         <item itemvalue="Python.scratch8" />
-        <item itemvalue="Python.scratch4" />
-        <item itemvalue="Python.scratch6" />
         <item itemvalue="Python.scratch7" />
+        <item itemvalue="Python.scratch6" />
       </list>
     </recent_temporary>
   </component>
@@ -296,7 +301,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730750063716</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="1. Refactored the portfolio_tab.py&#10;2. Made it so the &quot;Optimize Button&quot; and all it's functionality is FULLY functional. Currently reloads Portfolio statistics each time you click a Radio Button. May need to cache this on larger datasets for performance in the future. Only takes 0.002 seconds to load atm.">
+      <option name="closed" value="true" />
+      <created>1730826806720</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1730826806720</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -308,7 +321,8 @@
     <MESSAGE value="Bug Fix: format_row method wasn't returning ALL column names. That is now fixed." />
     <MESSAGE value="1. Finished main parts of backend Portfolio Calculator&#10;2. Added Datetime sorting of rows just in case we get a .csv that's out of order Date wise.&#10;3. Simplified and Optimized some things in data_trades.py" />
     <MESSAGE value="1. Added ability to Optimize ALL Strategies to get the highest return_to_dd&#10;2. Fixed the Portfolio Calculator webpage up some, so things would be positioned right." />
-    <option name="LAST_COMMIT_MESSAGE" value="1. Added ability to Optimize ALL Strategies to get the highest return_to_dd&#10;2. Fixed the Portfolio Calculator webpage up some, so things would be positioned right." />
+    <MESSAGE value="1. Refactored the portfolio_tab.py&#10;2. Made it so the &quot;Optimize Button&quot; and all it's functionality is FULLY functional. Currently reloads Portfolio statistics each time you click a Radio Button. May need to cache this on larger datasets for performance in the future. Only takes 0.002 seconds to load atm." />
+    <option name="LAST_COMMIT_MESSAGE" value="1. Refactored the portfolio_tab.py&#10;2. Made it so the &quot;Optimize Button&quot; and all it's functionality is FULLY functional. Currently reloads Portfolio statistics each time you click a Radio Button. May need to cache this on larger datasets for performance in the future. Only takes 0.002 seconds to load atm." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

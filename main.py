@@ -1,6 +1,7 @@
 __author__ = "Marcis Greenwood"
 __email__ = "greenwood.marcis@hotmail.com"
-__license__ = "GPL"
+__license__ = "proprietary"
+"This software is proprietary and protected by copyright laws. You are granted a non-transferable license to use this software solely for your own internal purposes. Any attempt to modify, distribute, or reverse engineer this software without prior written consent from Marcis Greenwood is strictly prohibited."
 
 from src.UI.app import start_dashboard
 from src.conf_setup import logger, APP_NAME

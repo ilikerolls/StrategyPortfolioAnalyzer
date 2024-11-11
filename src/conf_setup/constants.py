@@ -1,7 +1,9 @@
-# Top/Parent directory to the Bot
 import os
 from pathlib import Path
-APP_NAME = 'StrategyPorfolioAnalyzer'
+#from dash import Dash
+#import dash_bootstrap_components as dbc
+
+APP_NAME = 'StrategyPortfolioAnalyzer'
 # Root directory of the Program
 ROOT_DIR: str = str(Path(__file__).parent.parent.parent)
 # Directory to Hold .csv files to process
@@ -18,3 +20,7 @@ LOG_BACKUPS = 2
 # Database Settings
 DB_DIR = os.path.join(DATA_DIR, "dbs")
 DB_STRAT_DIR = os.path.join(DB_DIR, "strategies")
+
+# Global app variable for callbacks
+# suppress_callback_exceptions=True is necessary for multi file dash apps
+#app = Dash(name=__name__, suppress_callback_exceptions=True, external_stylesheets=[dbc.themes.BOOTSTRAP])
