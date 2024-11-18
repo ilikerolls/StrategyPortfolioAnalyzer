@@ -1,4 +1,5 @@
 import time
+from copy import deepcopy
 from dataclasses import dataclass
 import pandas as pd
 
@@ -32,6 +33,7 @@ class PortfolioCalculator:
         # Only do Calculations if we have more than 1 strategy selected. Otherwise, return 0's for empty Strategy List
         if len(self.sel_strats_ss) > 0:
             start_time = time.time()
+            self._update_strat_df_dates()
             self._combined_strats_df = self._combine_strat_stats()
             # Store Strategy Names
             self.strat_names: list = [strat_ss.name for strat_ss in self.sel_strats_ss]
@@ -45,21 +47,29 @@ class PortfolioCalculator:
     def _combine_strat_stats(self) -> pd.DataFrame:
         # create a list of selected strategy data frames
         strat_stat_list = [strat_ss.daily_df for strat_ss in self.sel_strats_ss]
-        # Loop through and only get Start & End Dates from Dataframe
-        if self.start_date is not None:
-            tmp_strat_stat_list = [
-                strat_df.loc[self.start_date : self.end_date]
-                for strat_df in strat_stat_list
-            ]
-            strat_stat_list = tmp_strat_stat_list
         # Combine to 1 Dataframe
-        combined_df = pd.concat(objs=strat_stat_list)
+        tmp_combined_df = pd.concat(objs=strat_stat_list)
         # Group By All Dataframes Combined to get our Total Daily PnL & Daily Cumulative Profits
-        daily_pnl: pd.Series = combined_df.groupby(by=[SchemaDT.DT_INDEX_NAME])['Profit'].aggregate('sum')
+        daily_pnl: pd.Series = tmp_combined_df.groupby(by=[SchemaDT.DT_INDEX_NAME])['Profit'].sum()
         cum_sum: pd.Series = daily_pnl.cumsum()
-        #NOTE: Do we really need to sort the Datetime Index? It takes 0.001 second more per strategy
         return pd.DataFrame(data={'Profit': daily_pnl, 'Cum. net profit': cum_sum},
                      index=SchemaDT.create_dt_idx(dates=daily_pnl.index)).sort_index(ascending=True)
+
+    def _update_strat_df_dates(self):
+        """Update Individual StrategyStats Objects to Selected Dates & Create a Copy of them if there's a start_date"""
+        # Loop through and only get Start & End Dates from Dataframe
+        if self.start_date is not None:
+            tmp_sel_strats_ss = []
+            # Set Individual Strategies to a Selected Date Permanently within this Object
+            for strat_ss in self.sel_strats_ss:
+                copied_strat_ss = deepcopy(strat_ss)
+                copied_strat_ss.daily_df = strat_ss.daily_df.loc[self.start_date: self.end_date]
+                daily_pnl: pd.Series = copied_strat_ss.daily_df.groupby(by=[SchemaDT.DT_INDEX_NAME])['Profit'].sum()
+                cum_sum: pd.Series = daily_pnl.cumsum()
+                copied_strat_ss.daily_df = pd.DataFrame(data={'Profit': daily_pnl, 'Cum. net profit': cum_sum},
+                             index=SchemaDT.create_dt_idx(dates=daily_pnl.index)).sort_index(ascending=True)
+                tmp_sel_strats_ss.append(copied_strat_ss)
+            self.sel_strats_ss = tmp_sel_strats_ss
 
     def _set_daily_max_dd(self):
         """ Sets Drawdown for a portfolio of Strategies """

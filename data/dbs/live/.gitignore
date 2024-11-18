@@ -1,0 +1,2 @@
+# Ignore parquet Database Settings Files
+*.parquet

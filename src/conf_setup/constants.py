@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-#from dash import Dash
+from dash import Dash
 #import dash_bootstrap_components as dbc
 
 APP_NAME = 'StrategyPortfolioAnalyzer'
@@ -21,6 +21,6 @@ LOG_BACKUPS = 2
 DB_DIR = os.path.join(DATA_DIR, "dbs")
 DB_STRAT_DIR = os.path.join(DB_DIR, "strategies")
 
-# Global app variable for callbacks
-# suppress_callback_exceptions=True is necessary for multi file dash apps
-#app = Dash(name=__name__, suppress_callback_exceptions=True, external_stylesheets=[dbc.themes.BOOTSTRAP])
+# Live Database Settings
+LIVE_DB_DIR = os.path.join(DB_DIR, "live")
+LIVE_SETTINGS_FILE = os.path.join(LIVE_DB_DIR, "live_settings.parquet")

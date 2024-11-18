@@ -5,14 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0de25923-4b6a-4b99-a8ce-cd27307ddf87" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/data/dbs/live/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UI/tabs/live_portfolio_tab.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/conf_setup/live_settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/tabs/portfolio_tab.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/tabs/portfolio_tab.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/tabs/tab2.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/conf_setup/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/conf_setup/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/analyzers/StrategyStats.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/analyzers/StrategyStats.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/analyzers/analyze_data_trades.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/analyzers/analyze_data_trades.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/analyzers/portfolio_calculator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/analyzers/portfolio_calculator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,34 +66,35 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Notification.DisplayName-DoNotAsk-Vcs Notifications&quot;: &quot;VCS notifications&quot;,
-    &quot;Notification.DoNotAsk-Vcs Notifications&quot;: &quot;true&quot;,
-    &quot;Python.app.executor&quot;: &quot;Run&quot;,
-    &quot;Python.backtrader_optimization.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.portfolio_calc.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.schema_data_trades.executor&quot;: &quot;Run&quot;,
-    &quot;Python.scratch1.executor&quot;: &quot;Run&quot;,
-    &quot;Python.scratch2.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.scratch3.executor&quot;: &quot;Run&quot;,
-    &quot;Python.scratch4.executor&quot;: &quot;Run&quot;,
-    &quot;Python.scratch6.executor&quot;: &quot;Run&quot;,
-    &quot;Python.scratch7 (1).executor&quot;: &quot;Debug&quot;,
-    &quot;Python.scratch7.executor&quot;: &quot;Run&quot;,
-    &quot;Python.scratch8.executor&quot;: &quot;Run&quot;,
-    &quot;Python.scratch9.executor&quot;: &quot;Run&quot;,
-    &quot;Python.tab2.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;G:/My Drive/Coding Projects/Python/PyCharm/StrategyPortfolioAnalyzer&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Notification.DisplayName-DoNotAsk-Vcs Notifications": "VCS notifications",
+    "Notification.DoNotAsk-Vcs Notifications": "true",
+    "Python.app.executor": "Run",
+    "Python.backtrader_optimization.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.portfolio_calc.executor": "Debug",
+    "Python.schema_data_trades.executor": "Run",
+    "Python.scratch1.executor": "Run",
+    "Python.scratch2.executor": "Debug",
+    "Python.scratch3.executor": "Run",
+    "Python.scratch4.executor": "Run",
+    "Python.scratch6.executor": "Run",
+    "Python.scratch7 (1).executor": "Debug",
+    "Python.scratch7.executor": "Run",
+    "Python.scratch8.executor": "Run",
+    "Python.scratch9.executor": "Run",
+    "Python.tab2.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "G:/My Drive/Coding Projects/Python/PyCharm/StrategyPortfolioAnalyzer",
+    "run.code.analysis.last.selected.profile": "aDefault",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
       <console-settings is-module-sdk="true">
@@ -108,7 +113,7 @@
       <recent name="G:\My Drive\Coding Projects\Python\PyCharm\StrategyPortfolioAnalyzer\data\in\arch" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.scratch9">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="StrategyPortfolioAnalyzer" />
       <option name="ENV_FILES" value="" />
@@ -123,6 +128,28 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="scratch1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="StrategyPortfolioAnalyzer" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch1.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -153,50 +180,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="scratch6" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="StrategyPortfolioAnalyzer" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch6.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="scratch7" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="StrategyPortfolioAnalyzer" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch7.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="scratch8" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="StrategyPortfolioAnalyzer" />
       <option name="ENV_FILES" value="" />
@@ -219,20 +202,42 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="scratch9" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="StrategyPortfolioAnalyzer" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch9.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.scratch9" />
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.scratch3" />
         <item itemvalue="Python.scratch8" />
-        <item itemvalue="Python.scratch7" />
-        <item itemvalue="Python.scratch6" />
+        <item itemvalue="Python.scratch3" />
+        <item itemvalue="Python.scratch1" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-d7ad00fb9fc3-c546a90a8094-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.23726.102" />
+        <option value="bundled-python-sdk-fb887030ada0-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.21565.199" />
       </set>
     </attachedChunks>
   </component>
@@ -309,7 +314,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730826806720</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Portfolio Optimization now works with Dates!">
+      <option name="closed" value="true" />
+      <created>1731366949746</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1731366949746</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -322,7 +335,8 @@
     <MESSAGE value="1. Finished main parts of backend Portfolio Calculator&#10;2. Added Datetime sorting of rows just in case we get a .csv that's out of order Date wise.&#10;3. Simplified and Optimized some things in data_trades.py" />
     <MESSAGE value="1. Added ability to Optimize ALL Strategies to get the highest return_to_dd&#10;2. Fixed the Portfolio Calculator webpage up some, so things would be positioned right." />
     <MESSAGE value="1. Refactored the portfolio_tab.py&#10;2. Made it so the &quot;Optimize Button&quot; and all it's functionality is FULLY functional. Currently reloads Portfolio statistics each time you click a Radio Button. May need to cache this on larger datasets for performance in the future. Only takes 0.002 seconds to load atm." />
-    <option name="LAST_COMMIT_MESSAGE" value="1. Refactored the portfolio_tab.py&#10;2. Made it so the &quot;Optimize Button&quot; and all it's functionality is FULLY functional. Currently reloads Portfolio statistics each time you click a Radio Button. May need to cache this on larger datasets for performance in the future. Only takes 0.002 seconds to load atm." />
+    <MESSAGE value="Portfolio Optimization now works with Dates!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Portfolio Optimization now works with Dates!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

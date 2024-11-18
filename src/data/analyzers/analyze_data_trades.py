@@ -18,7 +18,7 @@ class AnalyzeDataTrades:
         :param strat_names: A list of Strategy Names to get Statistics for
         :param start_date: [Optional] Starting date to select from dataframe. Default: ALL Dates
         :param end_date: [Optional] End Date to select from dataframe. Default: ALL Dates
-        :return: PortfolioCalculator Dataclass with Calculations of Profit, Drawdown, etc..
+        :return: PortfolioCalculator Dataclass with Calculations of Profit, Drawdown, etc
         """
         # Get Strategy StrategyStats Objects
         sel_strats_ss = [self.get_strat_stats(strat_name=strat_name) for strat_name in strat_names]
@@ -28,6 +28,7 @@ class AnalyzeDataTrades:
         """
         Strategy Dataclasses should ONLY be retrieved through this method
         :param strat_name: Strategy Name
+        False = Return Original StrategyStats. But if daily_df dataframe is modified it would be modified globally!
         :return: An up to date StrategyStats DataClass for the Strategy Name
         """
         if strat_name not in self._strat_stats.keys():
@@ -35,7 +36,7 @@ class AnalyzeDataTrades:
         self._strat_stats[strat_name] = self._update_strat_dataclass(strat_stats_obj=self._strat_stats[strat_name])
         return self._strat_stats[strat_name]
 
-    def optimize_portfolio(self, strat_names: list = None, start_date: str = None, end_date: str = None, top_ct: int = 3) -> list[PortfolioCalculator]:
+    def optimize_portfolio(self, strat_names: list = None, start_date: str = None, end_date: str = None, top_ct: int = 5) -> list[PortfolioCalculator]:
         """
         Optimize a list of Strategy Names and return the top [top_ct] best
         :param strat_names: [Optional] A list of Strategy names to be Optimized. Default uses ALL Strategies
@@ -66,7 +67,7 @@ class AnalyzeDataTrades:
         strat_df_len = len(strat_df)
         # Only update Strategy's Stats Dataclass if number of records has changed. Otherwise, return cached Dataclass
         if strat_df_len != strat_stats_obj.rows:
-            daily_pnl = strat_df.groupby(strat_df['Exit time'].dt.date)['Profit'].aggregate('sum')
+            daily_pnl = strat_df.groupby(strat_df['Exit time'].dt.date)['Profit'].sum()
             daily_cum_pnl = strat_df.groupby(strat_df['Exit time'].dt.date)['Cum. net profit'].last()
             strat_stats_obj.daily_df =  pd.DataFrame(data={'Profit': daily_pnl, 'Cum. net profit': daily_cum_pnl}, index=SchemaDT.create_dt_idx(dates=daily_pnl.index))
             strat_stats_obj.rows = strat_df_len
