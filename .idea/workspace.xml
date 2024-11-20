@@ -5,18 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0de25923-4b6a-4b99-a8ce-cd27307ddf87" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/data/dbs/live/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI/tabs/live_portfolio_tab.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/conf_setup/live_settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UI/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/tabs/live_portfolio_tab.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/tabs/live_portfolio_tab.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/tabs/portfolio_tab.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/tabs/portfolio_tab.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/tabs/tab2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/conf_setup/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/conf_setup/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/conf_setup/live_settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/conf_setup/live_settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/analyzers/StrategyStats.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/analyzers/StrategyStats.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/analyzers/analyze_data_trades.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/analyzers/analyze_data_trades.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/analyzers/portfolio_calculator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/analyzers/portfolio_calculator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,9 +73,9 @@
     "Python.schema_data_trades.executor": "Run",
     "Python.scratch1.executor": "Run",
     "Python.scratch2.executor": "Debug",
-    "Python.scratch3.executor": "Run",
+    "Python.scratch3.executor": "Debug",
     "Python.scratch4.executor": "Run",
-    "Python.scratch6.executor": "Run",
+    "Python.scratch6.executor": "Debug",
     "Python.scratch7 (1).executor": "Debug",
     "Python.scratch7.executor": "Run",
     "Python.scratch8.executor": "Run",
@@ -113,7 +109,7 @@
       <recent name="G:\My Drive\Coding Projects\Python\PyCharm\StrategyPortfolioAnalyzer\data\in\arch" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.scratch9">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="StrategyPortfolioAnalyzer" />
       <option name="ENV_FILES" value="" />
@@ -180,7 +176,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="scratch8" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="scratch4" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="StrategyPortfolioAnalyzer" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -193,7 +189,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch8.py" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch4.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -226,11 +222,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.scratch9" />
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.scratch8" />
-        <item itemvalue="Python.scratch3" />
+        <item itemvalue="Python.scratch9" />
         <item itemvalue="Python.scratch1" />
+        <item itemvalue="Python.scratch4" />
+        <item itemvalue="Python.scratch3" />
       </list>
     </recent_temporary>
   </component>
@@ -322,7 +318,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731366949746</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="1. Added Live Portfolio Tab.&#10;2. StrategyStats Single Strategy Classes can now calculate their own Drawdown based on a date">
+      <option name="closed" value="true" />
+      <created>1731958023269</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1731958023269</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -336,7 +340,8 @@
     <MESSAGE value="1. Added ability to Optimize ALL Strategies to get the highest return_to_dd&#10;2. Fixed the Portfolio Calculator webpage up some, so things would be positioned right." />
     <MESSAGE value="1. Refactored the portfolio_tab.py&#10;2. Made it so the &quot;Optimize Button&quot; and all it's functionality is FULLY functional. Currently reloads Portfolio statistics each time you click a Radio Button. May need to cache this on larger datasets for performance in the future. Only takes 0.002 seconds to load atm." />
     <MESSAGE value="Portfolio Optimization now works with Dates!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Portfolio Optimization now works with Dates!" />
+    <MESSAGE value="1. Added Live Portfolio Tab.&#10;2. StrategyStats Single Strategy Classes can now calculate their own Drawdown based on a date" />
+    <option name="LAST_COMMIT_MESSAGE" value="1. Added Live Portfolio Tab.&#10;2. StrategyStats Single Strategy Classes can now calculate their own Drawdown based on a date" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

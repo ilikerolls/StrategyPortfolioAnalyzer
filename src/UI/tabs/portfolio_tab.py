@@ -1,9 +1,9 @@
 from dash import html, dcc, Input, dash_table, Output, State, callback
 from dash.dcc import RadioItems
 from dash.exceptions import PreventUpdate
-import plotly.graph_objs as go
 from datetime import date, datetime
 
+from src.UI.utils import create_equity_graph
 from src.conf_setup import logger
 from src.data.analyzers.portfolio_calculator import PortfolioCalculator
 from src.data.types.data_trades import DataTrades
@@ -15,6 +15,10 @@ HEADER = html.H3(children=TAB_LABEL, style={"textAlign": "center"}, )
 MARGIN_LEFT = '75%'
 TABLE_WIDTH = '25%'
 GRAPH_HEIGHT = 750
+CALC_EQUITY_GRAPH_ID = 'calc-equity-curve'
+# Strategy Dropdown Menu
+ST_DROP_PERSIST = True
+ST_DROP_PERSIST_TP = 'local'
 
 data_trades = DataTrades()
 current_time: datetime = datetime.now()
@@ -71,7 +75,7 @@ def get_portfolio_obj(p_obj: list | PortfolioCalculator, start_date: str = None,
     :return: PortfolioCalculator based on options passed. If already a PortfolioCalculator object, then just return strats_obj.
     """
     if isinstance(p_obj, list):
-        return data_trades.get_portfolio_calc_stats(strat_names=p_obj, start_date=start_date, end_date=end_date)
+        return data_trades.get_calc_portfolio_stats(strat_names=p_obj, start_date=start_date, end_date=end_date)
     elif isinstance(p_obj, PortfolioCalculator):
         return p_obj
     else:
@@ -122,7 +126,9 @@ def get_strat_dropdown_button() -> html.Div:
                     value=get_strat_list(),
                     options=get_strat_list(),
                     multi=True,
-                    clearable=True
+                    clearable=True,
+                    persistence=ST_DROP_PERSIST,
+                    persistence_type=ST_DROP_PERSIST_TP
                 )]
             ),
             html.Div(children=[
@@ -134,44 +140,6 @@ def get_strat_dropdown_button() -> html.Div:
                 style={'margin-left': MARGIN_LEFT}
             )
         ])
-
-def _update_graphs(p_obj: PortfolioCalculator) -> list:
-    # Create traces for each Strategy
-    traces = []
-    for sel_strat_ss in p_obj.sel_strats_ss:
-        traces.append(go.Scatter(
-            x=sel_strat_ss.daily_df.index,  # Datetime is the Index
-            y=sel_strat_ss.daily_df['Cum. net profit'],
-            mode='lines+markers',
-            name=sel_strat_ss.name
-        ))
-    # Add Total strategy Equity Curve if we have more than 1 Strategy Selected
-    if len(traces) > 1:
-        traces.append(go.Scatter(
-            x=p_obj.combined_strats_df.index,  # Assuming Date is represented by index
-            y=p_obj.combined_strats_df['Cum. net profit'],
-            mode='lines+markers',
-            name='Total',
-            line=dict(dash='dash')  # Different line style for combined strategy
-        ))
-
-    return [
-        dcc.Graph(
-            id='equity-curve',
-            figure={
-                'data': traces,
-                'layout': go.Layout(
-                    title='Algorithmic Strategy Portfolio Equity Curve(s)',
-                    xaxis={'title': 'Date'},
-                    yaxis={'title': 'Profit and Loss $USD'},
-                    height=GRAPH_HEIGHT,
-                    hovermode='x unified',
-                    plot_bgcolor='rgba(0, 0, 0, 0)',
-                    paper_bgcolor='rgba(0, 0, 0, 0)'
-                )
-            }
-        )
-    ]
 
 def _update_opt_table_stats(p_obj: PortfolioCalculator) -> list:
     """
@@ -236,8 +204,8 @@ def update_analysis_click(n_clicks: int, strats_chosen: list, start_date: str, e
     :param end_date: [Optional] Date to end selection of statistics. Default: ALL Dates
     :return: A list containing dicts to update each row in the Statistics Table
     """
-    portfolio_stats = get_portfolio_obj(p_obj=strats_chosen, start_date=start_date, end_date=end_date)
-    return _update_opt_table_stats(p_obj=portfolio_stats), _update_graphs(p_obj=portfolio_stats)
+    p_calc = get_portfolio_obj(p_obj=strats_chosen, start_date=start_date, end_date=end_date)
+    return _update_opt_table_stats(p_obj=p_calc), create_equity_graph(p_obj=p_calc, id_name=CALC_EQUITY_GRAPH_ID, height=GRAPH_HEIGHT)
 
 @callback(
     [Output('strategy-dropdown', 'value'), Output("portfolio-stat-table", "data", allow_duplicate=True), Output('calc-graphs', 'children', allow_duplicate=True)],
@@ -254,6 +222,6 @@ def sel_radio_opt(option: str, session_id: str) -> tuple[list, list, list]:
     """
     if option is not None:
         p_calc = get_opt_strats(session_id, option)
-        return sorted(p_calc.strat_names), _update_opt_table_stats(p_obj=p_calc), _update_graphs(p_obj=p_calc)
+        return sorted(p_calc.strat_names), _update_opt_table_stats(p_obj=p_calc), create_equity_graph(p_obj=p_calc, id_name=CALC_EQUITY_GRAPH_ID, height=GRAPH_HEIGHT)
     else:  # No reason to update anything on Initial loading of Optimize Radio buttons when value = None
         raise PreventUpdate

@@ -36,6 +36,12 @@ class LiveSettings:
         except KeyError:
             return None
 
+    def get_strat_name_date(self) -> dict:
+        """
+        :return: A Dict of {'strat_name1': 'live_date1', 'strat_name2': '2024-01-01'}
+        """
+        return self.live_settings['LIVE_DATE'].to_dict()
+
     def get_strat_sl(self, name: str) -> float | None:
         """
         Return Strategy's Stop Loss

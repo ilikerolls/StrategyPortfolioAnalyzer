@@ -58,18 +58,21 @@ class PortfolioCalculator:
     def _update_strat_df_dates(self):
         """Update Individual StrategyStats Objects to Selected Dates & Create a Copy of them if there's a start_date"""
         # Loop through and only get Start & End Dates from Dataframe
-        if self.start_date is not None:
-            tmp_sel_strats_ss = []
-            # Set Individual Strategies to a Selected Date Permanently within this Object
-            for strat_ss in self.sel_strats_ss:
-                copied_strat_ss = deepcopy(strat_ss)
-                copied_strat_ss.daily_df = strat_ss.daily_df.loc[self.start_date: self.end_date]
-                daily_pnl: pd.Series = copied_strat_ss.daily_df.groupby(by=[SchemaDT.DT_INDEX_NAME])['Profit'].sum()
-                cum_sum: pd.Series = daily_pnl.cumsum()
-                copied_strat_ss.daily_df = pd.DataFrame(data={'Profit': daily_pnl, 'Cum. net profit': cum_sum},
-                             index=SchemaDT.create_dt_idx(dates=daily_pnl.index)).sort_index(ascending=True)
-                tmp_sel_strats_ss.append(copied_strat_ss)
-            self.sel_strats_ss = tmp_sel_strats_ss
+        if self.start_date is None and self.end_date is None:
+            return
+        tmp_sel_strats_ss = []
+        # Set Individual Strategies to a Selected Date Permanently within this Object
+        for strat_ss in self.sel_strats_ss:
+            copied_strat_ss = deepcopy(strat_ss)
+            start_date = self.start_date if self.start_date is not None else copied_strat_ss.daily_df.index.min()
+            end_date = self.end_date if self.end_date is not None else copied_strat_ss.daily_df.index.max()
+            copied_strat_ss.daily_df = strat_ss.daily_df.loc[start_date: end_date]
+            daily_pnl: pd.Series = copied_strat_ss.daily_df.groupby(by=[SchemaDT.DT_INDEX_NAME])['Profit'].sum()
+            cum_sum: pd.Series = daily_pnl.cumsum()
+            copied_strat_ss.daily_df = pd.DataFrame(data={'Profit': daily_pnl, 'Cum. net profit': cum_sum},
+                         index=SchemaDT.create_dt_idx(dates=daily_pnl.index)).sort_index(ascending=True)
+            tmp_sel_strats_ss.append(copied_strat_ss)
+        self.sel_strats_ss = tmp_sel_strats_ss
 
     def _set_daily_max_dd(self):
         """ Sets Drawdown for a portfolio of Strategies """
