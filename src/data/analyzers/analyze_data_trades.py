@@ -2,6 +2,7 @@ from copy import deepcopy
 from itertools import combinations
 import pandas as pd
 
+from src.conf_setup import logger
 from src.data.analyzers.StrategyStats import StrategyStats
 from src.data.analyzers.portfolio_calculator import PortfolioCalculator
 
@@ -42,7 +43,7 @@ class AnalyzeDataTrades:
         """
         Strategy Dataclasses should ONLY be retrieved through this method
         :param strat_name: Strategy Name
-        False = Return Original StrategyStats. But if daily_df dataframe is modified it would be modified globally!
+        False = Return Original StrategyStats. But if _strats_df dataframe is modified it would be modified globally!
         :return: An up to date StrategyStats DataClass for the Strategy Name
         """
         if strat_name not in self._strat_stats.keys():
@@ -50,10 +51,11 @@ class AnalyzeDataTrades:
         self._strat_stats[strat_name] = self._update_strat_dataclass(strat_stats_obj=self._strat_stats[strat_name])
         return self._strat_stats[strat_name]
 
-    def optimize_portfolio(self, strat_names: list = None, start_date: str = None, end_date: str = None, top_ct: int = 5) -> list[PortfolioCalculator]:
+    def optimize_portfolio(self, strat_names: list = None, account_size: float = 0.0, start_date: str = None, end_date: str = None, top_ct: int = 5) -> list[PortfolioCalculator]:
         """
         Optimize a list of Strategy Names and return the top [top_ct] best
         :param strat_names: [Optional] A list of Strategy names to be Optimized. Default uses ALL Strategies
+        :param account_size: [Optional] Size/Money you have to trade with to optimize for. Default = 0(disabled/not used)
         :param start_date: [Optional] Starting date to select from dataframe. Default: ALL Dates
         :param end_date: [Optional] End Date to select from dataframe. Default: ALL Dates
         :param top_ct: [Optional] Number of top best strategies to return
@@ -61,14 +63,19 @@ class AnalyzeDataTrades:
         """
         if strat_names is None:
             strat_names = self.strats_to_list()
+        account_size = 0.0 if account_size is None else account_size
         # Top PortfolioCalculator Strategy Objects to return
         top_strats = []
         for L in range(len(strat_names) + 1):
             for strat_comb in combinations(strat_names, L):
                 if len(strat_comb) == 0: continue
                 portfolio_calc = self.get_calc_portfolio_stats(strat_names=list(strat_comb), start_date=start_date, end_date=end_date)
-                top_strats.append(portfolio_calc)
-                # Sort PortfolioCalculator objects based on the value returned by get_value and select top top_ct(3)
+                # filter out Portfolios that do meet our Minimum Account Size
+                if account_size == 0.0 or account_size >= portfolio_calc.req_cap_daytrade:
+                    top_strats.append(portfolio_calc)
+                else:
+                    logger.info(f"Optimized Portfolio of Strategies: {portfolio_calc.strat_names} didn't meet our minimum account Size of ${portfolio_calc.req_cap_daytrade:,.2f} with only ${account_size:,.2f} configured")
+                # Sort PortfolioCalculator objects based on the value returned by get_value and select top top_ct(5)
                 top_strats = sorted(top_strats, key=lambda p_calc: p_calc.return_to_dd, reverse=True)[:top_ct]
         return top_strats
 
@@ -79,7 +86,7 @@ class AnalyzeDataTrades:
         """
         strat_df = self.trade_data[strat_stats_obj.name]
         # Only update Strategy's Stats Dataclass if number of records has changed. Otherwise, return cached Dataclass
-        if len(strat_df) != strat_stats_obj.rows:
+        if len(strat_df) != strat_stats_obj.trade_count:
             strat_stats_obj.create_daily_df(strat_df=strat_df)
         return strat_stats_obj
 

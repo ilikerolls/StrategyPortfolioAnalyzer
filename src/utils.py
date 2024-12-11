@@ -1,6 +1,5 @@
 from datetime import datetime, date
 
-
 def accounting_to_num(value) -> float:
     """Converts an accounting number string to a float."""
     value = value.replace('$', '').replace('(', '-').replace(')', '').replace(',', '')
@@ -26,7 +25,6 @@ def to_datetime(value) -> datetime:
     return datetime.strptime(value, date_format)
 
 
-
 from threading import Lock
 
 class Singleton(type):
@@ -45,6 +43,5 @@ class Singleton(type):
     def __call__(cls, *args, **kwargs):
         # Check again for instance just in case another thread beat us to it
         if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton,
-                                        cls).__call__(*args, **kwargs)
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
         return cls._instances[cls]
