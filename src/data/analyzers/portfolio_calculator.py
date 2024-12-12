@@ -19,7 +19,7 @@ class PortfolioCalculator(StratStatistics):
         """
         self.sel_strats_ss = sel_strats_ss
         self.strat_names: list = []
-        StratStatistics.__init__(self, start_date=start_date, end_date=end_date)
+        super().__init__(start_date=start_date, end_date=end_date)
         # Only do Calculations if we have more than 1 strategy selected. Otherwise, return 0's for empty Strategy List
         if len(self.sel_strats_ss) > 0:
             start_time = time.time()
@@ -43,11 +43,7 @@ class PortfolioCalculator(StratStatistics):
         tmp_combined_df = pd.concat(objs=strat_stat_list)
         # Group By All Dataframes Combined to get our Total Daily PnL & Daily Cumulative Profits
         daily_pnl: pd.Series = tmp_combined_df.groupby(by=[SchemaDT.DT_INDEX_NAME])['Profit'].sum()
-        cum_sum: pd.Series = daily_pnl.cumsum()
-        self.strats_df = pd.DataFrame(data={'Profit': daily_pnl, 'Cum. net profit': cum_sum},
-                     index=SchemaDT.create_dt_idx(dates=daily_pnl.index)).sort_index(ascending=True)
-        self.trade_count = len(self.strats_df)
-
+        self.create_daily_strats_df(daily_pnl=daily_pnl)
 
     def _update_strat_df_dates(self):
         """Update Individual StrategyStats Objects to Selected Dates & Create a Copy of them if there's a start_date"""
@@ -58,13 +54,11 @@ class PortfolioCalculator(StratStatistics):
         # Set Individual Strategies to a Selected Date Permanently within this Object
         for strat_ss in self.sel_strats_ss:
             copied_strat_ss = deepcopy(strat_ss)
-            start_date = self.start_date if self.start_date is not None else copied_strat_ss.strats_df.index.min()
-            end_date = self.end_date if self.end_date is not None else copied_strat_ss.strats_df.index.max()
+            start_date = self.start_date if self.start_date is not None else copied_strat_ss.df_start_date
+            end_date = self.end_date if self.end_date is not None else copied_strat_ss.df_end_date
             copied_strat_ss.strats_df = strat_ss.strats_df.loc[start_date: end_date]
             daily_pnl: pd.Series = copied_strat_ss.strats_df.groupby(by=[SchemaDT.DT_INDEX_NAME])['Profit'].sum()
-            cum_sum: pd.Series = daily_pnl.cumsum()
-            copied_strat_ss.strats_df = pd.DataFrame(data={'Profit': daily_pnl, 'Cum. net profit': cum_sum},
-                                                      index=SchemaDT.create_dt_idx(dates=daily_pnl.index)).sort_index(ascending=True)
+            copied_strat_ss.create_daily_strats_df(daily_pnl=daily_pnl)
             tmp_sel_strats_ss.append(copied_strat_ss)
         self.sel_strats_ss = tmp_sel_strats_ss
 

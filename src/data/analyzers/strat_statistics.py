@@ -1,10 +1,13 @@
 import pandas as pd
 
+from src.data.types.schema_data_trades import SchemaDT
+
+
 class StratStatistics:
     """Base Class for Calculating Statistics on both a Single Strategy and Portfolio of Strategies"""
 
     # Capital Required by Max DrawDown Multiplier
-    REQ_CAP_MAX_DD_MULT: float = 1.5
+    REQ_CAP_MAX_DD_MULT: float = 2
 
     def __init__(self, start_date: str = None, end_date: str = None):
         """
@@ -12,6 +15,8 @@ class StratStatistics:
         :param end_date: Set End Date for Strategy Results
         """
         self.strats_df: pd.DataFrame | None = None
+        self.df_start_date = None
+        self.df_end_date = None
         self.trade_count: int = 0
         self.start_date: str | None = start_date
         self.end_date: str | None = end_date
@@ -24,6 +29,18 @@ class StratStatistics:
         # largest_losing_day_cap: float = 0.0
         # largest_winning_day: datetime = None
         # largest_winning_day_cap: float = 0.0
+
+    def create_daily_strats_df(self, daily_pnl: pd.Series):
+        """Create/Update self.strats_df, Recalculate Cumulative Net Profit, self.start_date, self.end_date,
+        self.trade_count of Dataframe for performance
+        :param daily_pnl: Panda Series containing Profit sum for each day
+        """
+        cum_net_profit: pd.Series = daily_pnl.cumsum()
+        self.strats_df = pd.DataFrame(data={'Profit': daily_pnl, 'Cum. net profit': cum_net_profit},
+                                       index=SchemaDT.create_dt_idx(dates=daily_pnl.index)).sort_index(ascending=True)
+        self.df_start_date = self.strats_df.index.min()
+        self.df_end_date = self.strats_df.index.max()
+        self.trade_count = len(self.strats_df)
 
     @staticmethod
     def _calculate_drawdown(cum_net_profit: pd.Series):

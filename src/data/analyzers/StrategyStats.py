@@ -1,7 +1,6 @@
 import pandas as pd
 
 from src.data.analyzers.strat_statistics import StratStatistics
-from src.data.types.schema_data_trades import SchemaDT
 
 class StrategyStats(StratStatistics):
     """
@@ -15,7 +14,7 @@ class StrategyStats(StratStatistics):
         :param start_date: Set Start Date for Strategy Results
         :param end_date: Set End Date for Strategy Results
         """
-        StratStatistics.__init__(self, start_date=start_date, end_date=end_date)
+        super().__init__(start_date=start_date, end_date=end_date)
         self.name = name
 
     def create_daily_df(self, strat_df: pd.DataFrame):
@@ -24,8 +23,7 @@ class StrategyStats(StratStatistics):
         :param strat_df: An Entire Strategy's Dataframe
         """
         daily_pnl = strat_df.groupby(strat_df['Exit time'].dt.date)['Profit'].sum()
-        daily_cum_pnl = strat_df.groupby(strat_df['Exit time'].dt.date)['Cum. net profit'].last()
-        self._update_daily_df_internal(daily_pnl, daily_cum_pnl)
+        self.create_daily_strats_df(daily_pnl=daily_pnl)
         self.update_stats()
 
     def get_daily_max_dd(self, start_date: str = None, end_date: str = None) -> float:
@@ -36,8 +34,8 @@ class StrategyStats(StratStatistics):
         """
         if start_date is None and end_date is None:
             return self.max_drawdown
-        start_date = start_date if start_date is not None else self.start_date
-        end_date = end_date if end_date is not None else self.end_date
+        start_date = start_date or self.df_start_date
+        end_date = end_date or self.df_end_date
         cum_net_profit = self.strats_df.loc[start_date:end_date, 'Cum. net profit']
         return self._calculate_drawdown(cum_net_profit)
 
@@ -50,19 +48,7 @@ class StrategyStats(StratStatistics):
         start_date = pd.to_datetime(start_date) if start_date is not None else self.strats_df.index.min()
         end_date = pd.to_datetime(end_date) if end_date is not None else self.strats_df.index.max()
         daily_pnl = self.strats_df.loc[start_date:end_date, 'Profit']
-        cum_sum: pd.Series = daily_pnl.cumsum()
-        self._update_daily_df_internal(daily_pnl, cum_sum)
-
-    def _update_daily_df_internal(self, daily_pnl: pd.Series, cum_net_profit: pd.Series):
-        """Update self.strats_df, self.start_date, self.end_date, self.trade_count of Dataframe for performance
-        :param daily_pnl: Panda Series containing Profit sum for each day
-        :param cum_net_profit: Panda Series containing Cumulative Profit
-        """
-        self.strats_df = pd.DataFrame(data={'Profit': daily_pnl, 'Cum. net profit': cum_net_profit},
-                                       index=SchemaDT.create_dt_idx(dates=daily_pnl.index)).sort_index(ascending=True)
-        self.start_date = self.strats_df.index.min()
-        self.end_date = self.strats_df.index.max()
-        self.trade_count = len(self.strats_df)
+        self.create_daily_strats_df(daily_pnl=daily_pnl)
 
     def update_stats(self, start_date: str = None, end_date: str = None):
         """
